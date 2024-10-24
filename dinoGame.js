@@ -8,10 +8,12 @@ const game = {
     backGrounds: [],
     bgm1: new Audio('bgm/横向きのお散歩_-_8bit.mp3'),
     bgm2: new Audio('bgm/jump.mp3'),
+    bgm3: new Audio('bgm/20 ゲームオーバー.mp3'),
     enemys: [],
     enemyCountdown: 0,
     image: {},
     score: 0,
+    highscore: 0,
     state: 'loading',
     timer: null
 };
@@ -212,9 +214,16 @@ function hitCheck() {
         ) {
             game.state = 'gameover';
             game.bgm1.pause();
+            game.bgm1.currentTime = 0;
+            game.bgm3.play();
             ctx.fillStyle = 'black';
             ctx.font = 'bold 100px serif';
             ctx.fillText(`Game Over!`, 150, 200);
+            if (game.highscore <= game.score) {
+                 game.highscore = game.score;
+            } 
+            ctx.font = 'bold 60px serif';
+            ctx.fillText(`High Score ${game.highscore}`, 200, 350);
             clearInterval(game.timer);
         }
     }
